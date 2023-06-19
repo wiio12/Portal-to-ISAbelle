@@ -153,10 +153,10 @@ def parsed_json_to_env_and_dict(path_to_json, afp_path, port=9000, isa_path="/Ap
 
 if __name__ == '__main__':
     env = initialise_env(
-        8001, 
-        "/home/qj213/Isabelle2021", 
-        "/home/qj213/afp-2021-10-22/thys/Real_Impl/Real_Impl_Auxiliary.thy", 
-        "/home/qj213/afp-2021-10-22/thys/Real_Impl"
+        8000, 
+        "/Users/wiio/Isabelle2022", 
+        "/Users/wiio/Documents/Phd/miniF2F/isabelle/test/aime_1983_p3.thy", 
+        "/Users/wiio/Documents/Phd/miniF2F/isabelle/test/"
     )
     env.proceed_to_line('end', 'before')
     env.initialise()

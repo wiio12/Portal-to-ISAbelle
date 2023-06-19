@@ -418,8 +418,8 @@ class OneStageBody extends ZServer[ZEnv, Any] {
 }
 
 object PisaOneStage {
-  val path_to_isa_bin: String = "/home/qj213/Isabelle2021"
-  val path_to_afp: String = "/home/qj213/afp-2021-10-22"
+  val path_to_isa_bin: String = "/Users/wiio/Isabelle2022"
+  val path_to_afp: String = "/home/wiio/afp-2021-10-22"
 
   def main(args: Array[String]): Unit = {
     //    val path_to_file: String = s"$path_to_afp/thys/Game_Based_Crypto/Guessing_Many_One.thy"

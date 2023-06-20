@@ -398,8 +398,11 @@ class OneStageBody extends ZServer[ZEnv, Any] {
         val ancestors_names_list: List[String] =
           pisaos.get_theory_ancestors_names(pisaos.thy1)
         ancestors_names_list.mkString(",")
-      } else if (isa_command.command == "exit")
+      } else if (isa_command.command == "exit") {
         deal_with_exit(isa_command.command)
+      } else if (isa_command.command == "reset_problem") {
+        deal_with_reset_problem()
+      }
       else "Unrecognised operation."
     }
     ZIO.succeed(IsaState(proof_state))

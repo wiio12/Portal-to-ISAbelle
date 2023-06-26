@@ -201,6 +201,9 @@ class OneStageBody extends ZServer[ZEnv, Any] {
           pisaos.normal_with_hammer(state, add_names, del_names, timeout)
         actual_step = hammer_actual_step(old_state, new_name, partial_hammer)
         hammered = true
+      } else if (action.startsWith(SMT_HAMMER)) {
+        actual_step = hammer_actual_step(old_state, new_name, pisaos.exp_with_hammer2)
+        hammered = true
       } else {
         actual_step = action
       }

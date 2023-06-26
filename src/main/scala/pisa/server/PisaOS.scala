@@ -499,12 +499,8 @@ class PisaOS(
   // also return a non-empty list of Strings, each of which contains executable commands to close the top subgoal. We might need to chop part of
   // the string to get the actual tactic. For example, one of the string may look like "Try this: by blast (0.5 ms)".
   if (debug) println("Checkpoint 11")
-  val normal_with_Sledgehammer: MLFunction4[ToplevelState, Theory, List[
-    String
-  ], List[String], (Boolean, (String, List[String]))] =
-    compileFunction[ToplevelState, Theory, List[String], List[
-      String
-    ], (Boolean, (String, List[String]))](
+  val normal_with_Sledgehammer: MLFunction4[ToplevelState, Theory, List[String], List[String], (Boolean, (String, List[String]))] =
+    compileFunction[ToplevelState, Theory, List[String], List[String], (Boolean, (String, List[String]))](
       s""" fn (state, thy, adds, dels) =>
             |    let
             |       fun get_refs_and_token_lists (name) = (Facts.named name, []);
@@ -526,6 +522,37 @@ class PisaOS(
             |      Timeout.apply (Time.fromSeconds 35) go_run (state, thy) end
             |""".stripMargin
     )
+  
+  val exp_with_Sledgehammer: MLFunction2[ToplevelState, Theory, (Boolean, (String, List[String]))] = 
+  compileFunction[ToplevelState, Theory, (Boolean, (String, List[String]))](
+    s""" fn (state, thy) =>
+            |    let
+            |       val override = {add=[],del=[],only=false};
+            |       fun go_run (state, thy) =
+            |          let
+            |             val p_state = Toplevel.proof_of state;
+            |             val ctxt = Proof.context_of p_state;
+            |             val params = ${Sledgehammer_Commands}.default_params thy
+            |                [("provers", "cvc5 vampire verit e spass z3 zipperposition"),("timeout","30"),("preplay_timeout","0"),("minimize","false"),("isar_proofs", "false"),("smt_proofs", "true"),("learn","false")];
+            |             val results = ${Sledgehammer}.run_sledgehammer params ${Sledgehammer_Prover}.Auto_Try NONE 1 override p_state;
+            |             val (result, (outcome, step)) = results;
+            |           in
+            |             (result, (${Sledgehammer}.short_string_of_sledgehammer_outcome outcome, [YXML.content_of step]))
+            |           end;
+            |    in
+            |      Timeout.apply (Time.fromSeconds 35) go_run (state, thy) end
+            |""".stripMargin
+  )
+    
+
+  
+  def exp_with_hammer(top_level_state: ToplevelState, timeout_in_millis: Int = 35000): (Boolean, List[String]) = {
+    val f_res: Future[(Boolean, List[String])] = Future.apply {
+      val first_result = exp_with_Sledgehammer(top_level_state, thy1).force.retrieveNow
+      (first_result._1, first_result._2._2)
+    }
+    Await.result(f_res, Duration(timeout_in_millis, "millis"))
+  }
 
   var toplevel: ToplevelState = init_toplevel().force.retrieveNow
   if (debug) println("Checkpoint 12")
@@ -689,6 +716,20 @@ class PisaOS(
         thy1,
         added_names,
         deleted_names
+      ).force.retrieveNow
+      (first_result._1, first_result._2._2)
+    }
+    Await.result(f_res, Duration(timeout_in_millis, "millis"))
+  }
+
+  def exp_with_hammer2(
+      top_level_state: ToplevelState,
+      timeout_in_millis: Int = 35000
+  ): (Boolean, List[String]) = {
+    val f_res: Future[(Boolean, List[String])] = Future.apply {
+      val first_result = exp_with_Sledgehammer(
+        top_level_state,
+        thy1,
       ).force.retrieveNow
       (first_result._1, first_result._2._2)
     }

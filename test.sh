@@ -1,4 +1,4 @@
-sbt "runMain pisa.server.PisaServer" &
+sbt "runMain pisa.server.PisaOneStageServer8000" &
 PIDmain=$!
 sleep 12
 python src/main/python/extract_and_load_problems.py --json-path first_stage_output/Functional-Automata/Automata.json --isa-path /home/ywu/Isabelle2020 --afp /home/ywu/afp-2021-02-11 --saving-directory second_stage_output &

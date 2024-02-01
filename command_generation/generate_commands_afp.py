@@ -14,9 +14,9 @@ import glob
 import os
 import shutil
 
-home_directory = "/private/home/aqj"
+home_directory = "/home/wanghaiming_p21"
 
-script = f"unset http_proxy; unset https_proxy; python3 src/main/python/one_stage_extraction.py  --isa-path {home_directory}/Isabelle2021 -wd {home_directory}" + "/afp-2021-10-22/thys/{} --saving-directory afp_extractions/{} -tfp {}"
+script = f"unset http_proxy; unset https_proxy; python3 src/main/python/one_stage_extraction.py  --isa-path {home_directory}/Isabelle2022 -wd {home_directory}" + "/afp-2024-01-16/thys/{} --saving-directory afp_extractions/{} -tfp {}"
 if use_hammers:
     script = script + " -us"
 
@@ -28,8 +28,8 @@ IGNORED_THEORIES = {}
 IGNORED_ENTRIES = {}
 
 total_files = 0
-for project_name in glob.glob("{}/afp-2021-10-22/thys/**/*.thy".format(home_directory), recursive=True):
-    project_single_name = project_name.split("/")[6]
+for project_name in glob.glob("{}/afp-2024-01-16/thys/**/*.thy".format(home_directory), recursive=True):
+    project_single_name = project_name.split("/")[5]
     file_single_name = project_name.split("/")[-1]
 
     # Ignore already extracted files

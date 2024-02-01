@@ -114,7 +114,13 @@ class PisaOS(
       Seq(Path.of("This is not supported at the moment"))
     }
   }
-  if (debug) println("Checkpoint 3")
+  if (debug) {
+    println("Checkpoint 3")
+    println("Current theory name: " + currentTheoryName)
+    println("Current project name: " + currentProjectName)
+    println("Session roots: " + sessionRoots)
+    println("Working directory: " + working_directory)
+  }
   // Prepare setup config and the implicit Isabelle context
   val setup: Isabelle.Setup = Isabelle.Setup(
     isabelleHome = Path.of(path_to_isa_bin),
@@ -122,7 +128,8 @@ class PisaOS(
     userDir = None,
     logic = currentProjectName,
     workingDirectory = Path.of(working_directory),
-    build = false
+    build = false,
+    verbose = true,
   )
   implicit val isabelle: Isabelle = new Isabelle(setup)
   implicit val ec: ExecutionContext = ExecutionContext.global
@@ -133,21 +140,27 @@ class PisaOS(
     compileFunction[String, Theory, Theory](
       "fn (str,thy) => Thy_Info.script_thy Position.none str thy"
     )
+  if (debug) println("Checkpoint 4_1")
   val init_toplevel: MLFunction0[ToplevelState] =
     compileFunction0[ToplevelState]("Toplevel.init_toplevel")
   val is_proof: MLFunction[ToplevelState, Boolean] =
     compileFunction[ToplevelState, Boolean]("Toplevel.is_proof")
+  if (debug) println("Checkpoint 4_1_1")
   val is_skipped_proof: MLFunction[ToplevelState, Boolean] =
     compileFunction[ToplevelState, Boolean]("Toplevel.is_skipped_proof")
+  if (debug) println("Checkpoint 4_1_2")
   val proof_level: MLFunction[ToplevelState, Int] =
     compileFunction[ToplevelState, Int]("Toplevel.level")
+  if (debug) println("Checkpoint 4_1_3")
   val proof_of: MLFunction[ToplevelState, ProofState.T] =
     compileFunction[ToplevelState, ProofState.T]("Toplevel.proof_of")
+  if (debug) println("Checkpoint 4_1_4")
   val command_exception
       : MLFunction3[Boolean, Transition.T, ToplevelState, ToplevelState] =
     compileFunction[Boolean, Transition.T, ToplevelState, ToplevelState](
       "fn (int, tr, st) => Toplevel.command_exception int tr st"
     )
+  if (debug) println("Checkpoint 4_2")
   val command_exception_with_10s_timeout
       : MLFunction3[Boolean, Transition.T, ToplevelState, ToplevelState] =
     compileFunction[Boolean, Transition.T, ToplevelState, ToplevelState](
@@ -162,6 +175,7 @@ class PisaOS(
         |  fun go_run (a, b, c) = Toplevel.command_exception a b c
         |  in Timeout.apply (Time.fromSeconds 30) go_run (int, tr, st) end""".stripMargin
     )
+  if (debug) println("Checkpoint 4_3")
   val command_errors: MLFunction3[
     Boolean,
     Transition.T,
@@ -173,6 +187,7 @@ class PisaOS(
     ToplevelState,
     (List[RuntimeError.T], Option[ToplevelState])
   ]("fn (int, tr, st) => Toplevel.command_errors int tr st")
+  if (debug) println("Checkpoint 4_3")
   val toplevel_end_theory: MLFunction[ToplevelState, Theory] =
     compileFunction[ToplevelState, Theory]("Toplevel.end_theory Position.none")
   val theory_of_state: MLFunction[ToplevelState, Theory] =
@@ -258,6 +273,7 @@ class PisaOS(
     val toplevel_state = retrieve_tls(tls_name)
     fact_definition(toplevel_state, theorem_name).force.retrieveNow
   }
+  if (debug) println("Checkpoint 4_3s")
 
   val get_dependent_thms: MLFunction2[ToplevelState, String, List[String]] =
     compileFunction[ToplevelState, String, List[String]](

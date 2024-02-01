@@ -179,7 +179,7 @@ if __name__ == "__main__":
     parser.add_argument('--saving-directory', '-sd', help='Where to save the translation pairs',
                         default="/data2/wanghaiming/project/pisa_data/Portal-to-ISAbelle/afp_extractions/find_premises")
     parser.add_argument('--server-dump-path', '-sdp', help="Where to dump the server's output",
-                        default="/data2/wanghaiming/project/pisa_data/Portal-to-ISAbelle/afp_extractions/find_premises_server_dump")
+                        default="/data2/wanghaiming/project/pisa_data/Portal-to-ISAbelle/afp_extractions/find_premises")
     parser.add_argument('--jar-path', '-jp', help='Path to the jar file', 
                         default="/data2/wanghaiming/project/pisa_data/Portal-to-ISAbelle/target/scala-2.13/PISA-assembly-0.1.jar")
     parser.add_argument('--isabelle-path', '-ip', help='Path to the Isabelle installation', 
@@ -213,12 +213,12 @@ if __name__ == "__main__":
 
     # print(list_of_path_dicts[1])
     # find_premises_from_a_file(list_of_path_dicts[1])
-    # find_premises_from_a_file(
-    #     {
-    #         "problems_path": "/home/qj213/problems/afp/_home_qj213_afp-2022-12-06_thys_Formal_SSA_Construct_SSA.thy_problems.json", 
-    #         "saving_directory": saving_directory, 
-    #         "jar_path": jar_path, 
-    #         "isabelle_path": isabelle_path,
-    #         "server_dump_path": server_dump_path,
-    #     }
-    # )
+    # # find_premises_from_a_file(
+    # #     {
+    # #         "problems_path": "/home/qj213/problems/afp/_home_qj213_afp-2022-12-06_thys_Formal_SSA_Construct_SSA.thy_problems.json", 
+    # #         "saving_directory": saving_directory, 
+    # #         "jar_path": jar_path, 
+    # #         "isabelle_path": isabelle_path,
+    # #         "server_dump_path": server_dump_path,
+    # #     }
+    # # )

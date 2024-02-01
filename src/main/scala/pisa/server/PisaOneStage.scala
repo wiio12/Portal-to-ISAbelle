@@ -55,7 +55,8 @@ class OneStageBody extends ZServer[ZEnv, Any] {
     pisaos = new PisaOS(
       path_to_isa_bin = isaPath,
       path_to_file = path_to_file.context,
-      working_directory = isaWorkingDirectory
+      working_directory = isaWorkingDirectory,
+      debug = true
     )
     stand_in_thy = pisaos.thy1.mlValue
     stand_in_tls = pisaos.copy_tls

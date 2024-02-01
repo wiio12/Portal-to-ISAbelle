@@ -123,8 +123,13 @@ if __name__ == "__main__":
     isabelle_path = args.isabelle_path
     if isabelle_path is None:
         isabelle_path = "/home/qj213/Isabelle2022"
-    extraction_file_directory = args.extraction_file_directory
-    saving_directory = args.saving_directory
+    # extraction_file_directory = args.extraction_file_directory
+    # saving_directory = args.saving_directory
+    extraction_file_directory = "/data2/wanghaiming/afp-2022-12-06/thys"
+    # extraction_file_directory = "/home/qj213/Isabelle2022/src/HOL"
+    saving_directory = "/data2/wanghaiming/project/pisa_data/Portal-to-ISAbelle/afp_extractions2"
+    # saving_directory = "/home/qj213/std_extractions"
+    
     if not os.path.isdir(saving_directory):
         os.makedirs(saving_directory)
 
@@ -180,5 +185,6 @@ if __name__ == "__main__":
         param_paths.append(param_path)
     
     print(f"Extracting {len(param_paths)} files in total.")
-    with mp.Pool(processes=int(mp.cpu_count()/8)) as pool:
-        pool.map(extract_a_file, param_paths)
+    # with mp.Pool(processes=int(mp.cpu_count()/8)) as pool:
+    #     pool.map(extract_a_file, param_paths)
+    extract_a_file(param_paths[234])

@@ -113,12 +113,12 @@ if __name__ == "__main__":
     import glob
     import os
     parser = argparse.ArgumentParser(description='Extracting translation pairs.')
-    parser.add_argument('--extraction-file-directory', '-efd', help='Where the parsed json files are')
-    parser.add_argument('--saving-directory', '-sd', help='Where to save the translation pairs')
+    parser.add_argument('--extraction-file-directory', '-efd', help='Where the parsed json files are', default="afp_extractions")
+    parser.add_argument('--saving-directory', '-sd', help='Where to save the translation pairs', default="data/old_output")
     parser.add_argument('--proof', dest='proof', action='store_true')
     parser.add_argument('--state', dest='state', action='store_true')
     args = parser.parse_args()
-
+    args.proof = True
     assert args.proof or args.state
     if args.proof and not args.state:
         proof_state_suffix = "proof"

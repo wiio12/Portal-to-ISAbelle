@@ -5,7 +5,10 @@ target/*
 .metals/*
 .vscode/*
 afp_extractions/
+afp_extractions.bak/
 std_extractions/
+afp_extractions2/
+scripts/extraction/
 
 *.ckpt
 data

@@ -95,8 +95,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Extracting an Isabelle theory file.')
     parser.add_argument('--isa-path', help='The path to the Isabelle executable',
                         default="/home/wanghaiming_p21/Isabelle2022")
-    parser.add_argument('--working-directory', '-wd', help='Path to the AFP project', default="/home/wanghaiming_p21/afp-2024-01-16/thys/Extended_Finite_State_Machine_Inference")
-    parser.add_argument('--theory-file-path', '-tfp', help='Path to the file to parse', default="/home/wanghaiming_p21/afp-2024-01-16/thys/Extended_Finite_State_Machine_Inference/SelectionStrategies.thy")
+    parser.add_argument('--working-directory', '-wd', help='Path to the AFP project', default="/home/wanghaiming_p21/afp-2022-12-06/thys/Extended_Finite_State_Machine_Inference")
+    parser.add_argument('--theory-file-path', '-tfp', help='Path to the file to parse', default="/home/wanghaiming_p21/afp-2022-12-06/thys/Extended_Finite_State_Machine_Inference/SelectionStrategies.thy")
     parser.add_argument('--saving-directory', '-sd', help='Where the save the parsed json files', default="afp_extractions/Extended_Finite_State_Machine_Inference")
     parser.add_argument('--port', '-p', help='Port to use to communicate', default=8000, type=int)
     parser.add_argument('--use-sledgehammer', '-us', help='Whether to use sledgehammer',
